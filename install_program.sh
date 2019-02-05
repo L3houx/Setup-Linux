@@ -9,6 +9,9 @@ apt-get install curl -y
 #Install git
 apt-get install git -y
 
+#Install feh
+sudo apt install feh -y
+
 #Install net-tools (ifconfig)
 apt-get install net-tools -y
 
