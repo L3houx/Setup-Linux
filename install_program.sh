@@ -8,23 +8,29 @@ curl --remote-name https://prerelease.keybase.io/keybase_amd64.deb
 sudo dpkg -i keybase_amd64.deb
 sudo apt-get install -f
 
+#Install Dirb
+sudo apt-get install dirb -y
+
+#Install Nikto
+sudo apt-get nikto -y
+
 #Install Curl
-apt-get install curl -y
+sudo apt-get install curl -y
 
 #Install git
-apt-get install git -y
+sudo apt-get install git -y
 
 #Install feh
 sudo apt install feh -y
 
 #Install net-tools (ifconfig)
-apt-get install net-tools -y
+sudo apt-get install net-tools -y
 
 #Install VirtualBox
-apt-get install virtualbox -y
+sudo apt-get install virtualbox -y
 
 #Install Flameshot
-apt-get install flameshot -y
+sudo apt-get install flameshot -y
 
 #Install Okular (PDF reader)
 sudo apt-get install okular -y
@@ -42,28 +48,28 @@ sudo apt install acpi -y
 sudo apt install xbacklight -y
 
 #Install Binwalk
-apt-get install binwalk -y
+sudo apt-get install binwalk -y
 
 #Install Foremost
-apt-get install foremost -y
+sudo apt-get install foremost -y
 
 #Install Exiftool
-apt-get install libimage-exiftool-perl -y
+sudo apt-get install libimage-exiftool-perl -y
 
 #Install Pngcheck
-apt-get install pngcheck -y
+sudo apt-get install pngcheck -y
 
 #Install GDB
-apt-get install gdb -y
+sudo apt-get install gdb -y
 
 #Install Steghide
-apt-get install steghide -y
+sudo apt-get install steghide -y
 
 #Install Sonic Visualiser
-apt install sonic-visualiser -y
+sudo apt install sonic-visualiser -y
 
 #Install Stegosuite
-apt-get install stegosuite -y
+sudo apt-get install stegosuite -y
 
 #Install 7z
 sudo apt install p7zip-full -y
