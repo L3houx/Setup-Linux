@@ -12,7 +12,7 @@ sudo apt-get install -f
 sudo apt-get install dirb -y
 
 #Install Nikto
-sudo apt-get nikto -y
+sudo apt-get install nikto -y
 
 #Install Curl
 sudo apt-get install curl -y
@@ -21,13 +21,10 @@ sudo apt-get install curl -y
 sudo apt-get install git -y
 
 #Install feh
-sudo apt install feh -y
+sudo apt-get install feh -y
 
 #Install net-tools (ifconfig)
 sudo apt-get install net-tools -y
-
-#Install VirtualBox
-sudo apt-get install virtualbox -y
 
 #Install Flameshot
 sudo apt-get install flameshot -y
@@ -39,13 +36,13 @@ sudo apt-get install okular -y
 sudo apt-get install arp-scan -y
 
 #Install wine
-sudo apt install wine -y
+sudo apt-get install wine -y
 
 #Install acpi
-sudo apt install acpi -y
+sudo apt-get install acpi -y
 
 #Install xBacklight
-sudo apt install xbacklight -y
+sudo apt-get install xbacklight -y
 
 #Install Binwalk
 sudo apt-get install binwalk -y
@@ -66,33 +63,37 @@ sudo apt-get install gdb -y
 sudo apt-get install steghide -y
 
 #Install Sonic Visualiser
-sudo apt install sonic-visualiser -y
+sudo apt-get install sonic-visualiser -y
 
 #Install Stegosuite
 sudo apt-get install stegosuite -y
 
 #Install 7z
-sudo apt install p7zip-full -y
+sudo apt-get install p7zip-full -y
 
 #Install Htop
-sudo apt  install htop -y
+sudo apt-get install htop -y
 
 #Spotify
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 931FF8E79F0876134EDDBDCCA87FF9DF48BF1C90
 echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
-sudo apt-get update
+sudo apt-get update -y
 sudo apt-get install spotify-client -y
 
-
-########## This section need to be optimize ##########
 #Bitwarden
-#dpkg -i programs_installation/Bitwarden-1.12.0-amd64.deb
+wget "https://vault.bitwarden.com/download/?app=desktop&platform=linux&variant=appimage" --max-redirect 5 -O ~/Desktop/Setup-Linux/programs/Bitwarden.AppImage
+sudo chmod +x ~/Desktop/Setup-Linux/programs/Bitwarden.AppImage
+sudo ln -s ~/Desktop/Setup-Linux/programs/Bitwarden.AppImage /bin/bitwarden
 
 #Install Slack
-#dpkg -i programs_installation/slack-desktop-3.3.3-amd64.deb
+SLACK_VERSION=`curl -sL https://slack.com/intl/es/release-notes/linux | grep "<h2>Slack [0-9].[0-9].[0-9]</h2>" -o| cut -d$'\n' -f 1| cut -d "<" -f 2 | cut -d " " -f 2`
+wget https://downloads.slack-edge.com/linux_releases/slack-desktop-$SLACK_VERSION-amd64.deb -O ~/Desktop/Setup-Linux/programs/slack.deb
+sudo dpkg -i ~/Desktop/Setup-Linux/programs/slack.deb
 
 #Install Burpsuite Community
-#bash programs_installation/burpsuite_community_linux_v1_7_36.sh
+wget "https://portswigger.net/burp/releases/download?product=community&type=linux" -O ~/Desktop/Setup-Linux/programs/burpsuite.sh
+chmod +x ~/Desktop/Setup-Linux/programs/burpsuite.sh
+bash ~/Desktop/Setup-Linux/programs/burpsuite.sh
 
 #Install 010Editor
 #bash programs_installation/010EditorLinux64Installer
@@ -113,8 +114,11 @@ sudo apt-get install spotify-client -y
 
 #Set my I3 configuration
 sudo apt-get install i3 -y
-sudo -u L3houx git clone https://github.com/L3houx/I3-Setup.git
-sudo -u L3houx cp -r I3-Setup/* ~/.config/
+sudo -u L3houx git clone https://github.com/L3houx/I3-Setup.git ~/Desktop/
+sudo -u L3houx cp -r ~/Desktop/I3-Setup/* ~/.config/
 i3 restart
 
+#Change the file permission to be able to change the brigthness wth a python script
+sudo chmod 666 /sys/class/backlight/*/brightness
+sudo chmod 666 /sys/class/backlight/*/actual_brightness
 
