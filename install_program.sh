@@ -1,12 +1,15 @@
 #!/bin/sh
 
 #Install dependencies
-sudo apt-get install gconf-service gconf-service-backend gconf2 gconf2-common libgconf-2-4 python-doc python-tk python2-doc python2.7-doc binfmt-support libappindicator1 libindicator7 libpython-stdlib libpython2-stdlib python python-minimal python2 python2-minimal python2.7 python2.7-minimal libmono-system-windows-forms4.0-cil libmono-system-web4.0-cil libmono-system-net4.0-cil libmono-system-runtime-serialization4.0-cil libmono-system-xml-linq4.0-cil fonts-font-awesome libxcb1-dev libxcb-keysyms1-dev libpango1.0-dev libxcb-util0-dev libxcb-icccm4-dev libyajl-dev libstartup-notification0-dev libxcb-randr0-dev libev-dev libxcb-cursor-dev libxcb-xinerama0-dev libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev autoconf xutils-dev libtool automake -y
+sudo apt-get install gconf-service gconf-service-backend gconf2 gconf2-common libgconf-2-4 python-doc python-tk python2-doc python2.7-doc binfmt-support libappindicator1 libindicator7 libpython-stdlib libpython2-stdlib python python-minimal python2 python2-minimal python2.7 python2.7-minimal libmono-system-windows-forms4.0-cil libmono-system-web4.0-cil libmono-system-net4.0-cil libmono-system-runtime-serialization4.0-cil libmono-system-xml-linq4.0-cil fonts-font-awesome libxcb1-dev libxcb-keysyms1-dev libpango1.0-dev libxcb-util0-dev libxcb-icccm4-dev libyajl-dev libstartup-notification0-dev libxcb-randr0-dev libev-dev libxcb-cursor-dev libxcb-xinerama0-dev libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev autoconf xutils-dev libtool automake compton -y
 
-#Install Keybase
-curl --remote-name https://prerelease.keybase.io/keybase_amd64.deb
-sudo dpkg -i keybase_amd64.deb
-sudo apt-get install -f
+#Install ZSH
+sudo apt-get install zsh -y
+
+#Config ZSH
+sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+exit
+cp ~/Desktop/I3-Setup/.zshrc ~/.zshrc
 
 #Install Dirb
 sudo apt-get install dirb -y
@@ -80,6 +83,9 @@ sudo apt-get install nmap -y
 #Install Wireshark
 sudo apt-get install wireshark -y
 
+#Mkdir programs to download programs there
+mkdir ~/Desktop/Setup-Linux/programs/
+
 #Install Spotify
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 931FF8E79F0876134EDDBDCCA87FF9DF48BF1C90
 echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
@@ -100,6 +106,11 @@ sudo dpkg -i ~/Desktop/Setup-Linux/programs/slack.deb
 wget "https://portswigger.net/burp/releases/download?product=community&type=linux" -O ~/Desktop/Setup-Linux/programs/burpsuite.sh
 chmod +x ~/Desktop/Setup-Linux/programs/burpsuite.sh
 bash ~/Desktop/Setup-Linux/programs/burpsuite.sh
+
+#Install Keybase
+curl --remote-name https://prerelease.keybase.io/keybase_amd64.deb -o ~/Desktop/Setup-Linux/programs/
+sudo dpkg -i keybase_amd64.deb
+sudo apt-get install -f
 
 #Install 010Editor
 #bash programs_installation/010EditorLinux64Installer
@@ -149,9 +160,31 @@ cd build
 make
 sudo make install && cd ~/Desktop && rm -r  ~/Desktop/i3-gaps
 
-#Change the file permission to be able to change the brigthness wth a python script
-sudo chmod 666 /sys/class/backlight/*/brightness
-sudo chmod 666 /sys/class/backlight/*/actual_brightness
+#Change the file permission to be able to change the brigthness wth a python script (https://www.linuxbabe.com/linux-server/how-to-enable-etcrc-local-with-systemd)
+##Create service rc.local (command that are executed when starting)
+sudo echo "[Unit]" >> /etc/systemd/system/rc-local.service
+sudo echo " Description=/etc/rc.local Compatibility" >> /etc/systemd/system/rc-local.service
+sudo echo " ConditionPathExists=/etc/rc.local" >> /etc/systemd/system/rc-local.service
+sudo echo "" >> /etc/systemd/system/rc-local.service
+sudo echo "[Service]" >> /etc/systemd/system/rc-local.service
+sudo echo " Type=forking" >> /etc/systemd/system/rc-local.service
+sudo echo " ExecStart=/etc/rc.local start" >> /etc/systemd/system/rc-local.service
+sudo echo " TimeoutSec=0" >> /etc/systemd/system/rc-local.service
+sudo echo " StandardOutput=tty" >> /etc/systemd/system/rc-local.service
+sudo echo " RemainAfterExit=yes" >> /etc/systemd/system/rc-local.service
+sudo echo " SysVStartPriority=99" >> /etc/systemd/system/rc-local.service
+sudo echo "" >> /etc/systemd/system/rc-local.service
+sudo echo "[Install]" >> /etc/systemd/system/rc-local.service
+sudo echo " WantedBy=multi-user.target" >> /etc/systemd/system/rc-local.service
+##Write into the file /etc/rc.local to have permanent rights to write in brightness files
+sudo echo "#!/bin/bash" >> /etc/rc.local
+sudo echo "sudo chmod 666 /sys/class/backlight/*/brightness" >> /etc/rc.local
+sudo echo "sudo chmod 666 /sys/class/backlight/*/actual_brightness" >> /etc/rc.local
+sudo chmod +x /etc/rc.local
+##Enable service
+sudo systemctl enable rc-local
+##Starting the service
+sudo systemctl start rc-local.service
 
 #Activate the cronjob to notify us when the battery is low
 crontab -l > ~/Desktop/mycron
