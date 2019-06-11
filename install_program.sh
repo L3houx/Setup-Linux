@@ -14,6 +14,12 @@ cp ~/Desktop/I3-Setup/.zshrc ~/.zshrc
 #Install Dirb
 sudo apt-get install dirb -y
 
+#Install gimp
+sudo apt-get install gimp -y
+
+#Install Bless
+sudo apt-get install bless -y
+
 #Install Nikto
 sudo apt-get install nikto -y
 
@@ -188,7 +194,7 @@ sudo systemctl start rc-local.service
 
 #Activate the cronjob to notify us when the battery is low
 crontab -l > ~/Desktop/mycron
-echo "5 * * * * export DISPLAY=:0.0 && ~/Desktop/I3-Setup/i3-battery-warning/battery-PopUp" >> ~/Desktop/mycron
+echo "2 * * * * export DISPLAY=:0.0 && ~/Desktop/I3-Setup/i3-battery-warning/battery-PopUp" >> ~/Desktop/mycron
 crontab ~/Desktop/mycron
 rm ~/Desktop/mycron
 
