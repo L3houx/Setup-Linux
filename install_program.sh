@@ -9,7 +9,7 @@ sudo apt-get install zsh -y
 #Config ZSH
 sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 exit
-cp ~/Desktop/I3-Setup/.zshrc ~/.zshrc
+cp ~/Desktop/dotFiles/.zshrc ~/.zshrc
 
 #Install Dirb
 sudo apt-get install dirb -y
@@ -137,8 +137,8 @@ sudo apt-get install -f
 
 #Set my I3 configuration
 sudo apt-get install i3 -y
-sudo -u L3houx git clone https://github.com/L3houx/I3-Setup.git ~/Desktop/
-sudo -u L3houx cp -r ~/Desktop/I3-Setup/* ~/.config/
+sudo -u L3houx git clone https://github.com/L3houx/dotFiles.git ~/Desktop/
+sudo -u L3houx cp -r ~/Desktop/dotFiles/* ~/
 i3 restart
 
 #Install I3 Gaps (https://gist.github.com/boreycutts/6417980039760d9d9dac0dd2148d4783)
@@ -194,7 +194,7 @@ sudo systemctl start rc-local.service
 
 #Activate the cronjob to notify us when the battery is low
 crontab -l > ~/Desktop/mycron
-echo "2 * * * * export DISPLAY=:0.0 && ~/Desktop/I3-Setup/i3-battery-warning/battery-PopUp" >> ~/Desktop/mycron
+echo "2 * * * * export DISPLAY=:0.0 && ~/Desktop/dotFiles/.config/i3-battery-warning/battery-PopUp" >> ~/Desktop/mycron
 crontab ~/Desktop/mycron
 rm ~/Desktop/mycron
 
