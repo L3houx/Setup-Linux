@@ -114,9 +114,13 @@ chmod +x ~/Desktop/Setup-Linux/programs/burpsuite.sh
 bash ~/Desktop/Setup-Linux/programs/burpsuite.sh
 
 #Install Keybase
-curl --remote-name https://prerelease.keybase.io/keybase_amd64.deb -o ~/Desktop/Setup-Linux/programs/
+curl --remote-name https://prerelease.keybase.io/keybase_amd64.deb -O ~/Desktop/Setup-Linux/programs/
 sudo dpkg -i keybase_amd64.deb
 sudo apt-get install -f
+
+#Install Dive
+wget https://github.com/wagoodman/dive/releases/download/v0.9.0/dive_0.9.0_linux_amd64.deb -O ~/Desktop/Setup-Linux/programs/
+sudo apt install ~/Desktop/Setup-Linux/programs/dive_0.9.0_linux_amd64.deb
 
 #Install 010Editor
 #bash programs_installation/010EditorLinux64Installer
