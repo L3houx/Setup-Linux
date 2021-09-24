@@ -27,6 +27,8 @@ sudo pacman -Sy discord
 ## VSCode
 sudo pacman -Sy code
 
-
 ## ZSH
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+## Keybase
+sudo pacman -Sy keybase-gui
